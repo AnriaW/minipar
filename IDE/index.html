@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniPar Interpreter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .input-container, .output-container {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="input-container">
+        <label for="minipar-input">Minipar Input</label>
+        <textarea id="minipar-input" placeholder="Digite seu código MiniPar aqui..."></textarea>
+    </div>
+    
+    <button id="submit-btn">Submit</button>
+    
+    <div class="output-container">
+        <label for="minipar-output">Minipar Output</label>
+        <textarea id="minipar-output" readonly placeholder="Press 'Submit' and the output will be displayed here."></textarea>
+    </div>
+
+    <script>
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            const input = document.getElementById('minipar-input').value;
+            const outputElement = document.getElementById('minipar-output');
+            
+            // Simulação de processamento - substitua por chamada real ao back-end
+            outputElement.value = "Processando...\n";
+            
+            setTimeout(() => {
+                // Esta é apenas uma simulação
+                // No futuro, você substituirá por uma chamada AJAX para seu back-end
+                outputElement.value = `Saída para:\n${input}\n\n(Esta é uma simulação. Conecte ao back-end para obter a saída real.)`;
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
