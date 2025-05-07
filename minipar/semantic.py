@@ -1,4 +1,4 @@
-from analisadorLexico import tokens 
+from lexer import tokens 
 #
 class SymbolTable:
     def __init__(self):

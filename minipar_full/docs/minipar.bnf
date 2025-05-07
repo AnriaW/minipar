@@ -1,0 +1,68 @@
+<programa_minipar> ::= <bloco_stmt>
+
+<bloco_stmt>      ::= <bloco_SEQ> | <bloco_PAR>
+<bloco_SEQ>       ::= SEQ "{" <stmts> "}"
+<bloco_PAR>       ::= PAR "{" <stmts> "}"
+
+<stmts>           ::= <stmt> | <stmt> <stmts>
+<stmt>            ::= <atribuição> ";"
+                    | <declaração> ";"
+                    | <if_stmt>
+                    | <while_loop>
+                    | <for_loop>
+                    | <def_função>
+                    | <send> ";"
+                    | <receive> ";"
+                    | <comentário>
+                    | <return> ";"              # Adicionado return
+
+<atribuição>      ::= ID "=" <expr>
+                    | ID "[" <expr> "]" "=" <expr>  # Atribuição a elemento de lista
+
+<declaração>      ::= <tipo_var> ID ("=" <expr>)?
+                    | "List" "<" <tipo_var> ">" ID "=" "[" <expr_list> "]"  # Declaração de lista
+
+<tipo_var>        ::= "Bool" | "Int" | "Float" | "String" | "c_channel"
+
+<if_stmt>         ::= IF "(" <expr> ")" "{" <stmts> "}" (ELSE "{" <stmts> "}")?
+<while_loop>      ::= WHILE "(" <expr> ")" "{" <stmts> "}"
+<for_loop>        ::= FOR "(" ID IN <expr> ")" "{" <stmts> "}"  # Loop for
+
+<def_função>      ::= DEF ID "(" <params> ")" "{" <stmts> "}"
+<params>          ::= ID ("," ID)* | ε
+
+<send>            ::= ID "." SEND "(" <expr> ("," <expr>)* ")"
+<receive>         ::= ID "." RECEIVE "(" <expr> ("," <expr>* ")"
+
+<expr>            ::= <expr_arit> | <expr_bool> | <expr_str> | <expr_chan> | <expr_lista>
+<expr_arit>       ::= <expr_arit> "+" <termo>
+                    | <expr_arit> "-" <termo>
+                    | <termo>
+<termo>           ::= <termo> "*" <fator>
+                    | <termo> "/" <fator>
+                    | <fator>
+<fator>           ::= "(" <expr> ")"
+                    | NUM
+                    | FLOAT
+                    | ID
+                    | ID "[" <expr> "]"          # Acesso a elemento de lista
+                    | <chamada_função>
+                    | <input_expr>
+                    | <output_expr>
+
+<expr_bool>       ::= <expr> OP_COMP <expr>
+                    | "true" | "false"
+
+<expr_str>        ::= STR
+<expr_chan>       ::= CHAN ID ID ID
+<expr_lista>      ::= "[" <expr_list> "]"        # Lista literal
+<expr_list>       ::= <expr> ("," <expr>)* | ε
+<input_expr>      ::= INPUT "(" <args> ")"  
+<output_expr>     ::= OUTPUT "(" <args> ")" 
+
+<chamada_função>  ::= ID "(" <args> ")"
+<args>            ::= <expr> ("," <expr>)* | ε
+
+<return>          ::= RETURN <expr>              # Retorno de função
+
+<comentário>      ::= "#" TEXTOLIVRE

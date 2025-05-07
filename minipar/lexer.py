@@ -1,16 +1,16 @@
 import ply.lex as lex
-import interpretador
+import interpreter
 #
 # Lista de tokens
 tokens = [
     'SEQ', 'PAR', 'IF', 'ELSE', 'WHILE', 'INPUT', 'OUTPUT',
     'SEND', 'RECEIVE',
-    'ID', 'INT', 'STRING',
+    'ID', 'INT', 'STRING', 'FLOAT',
     'PLUS', 'MINUS', 'TIMES', 'DIVIDE',
     'LPAREN', 'RPAREN', 'LBRACE', 'RBRACE',
     'COMMA', 'EQUALS', 'LESS_THAN', 'GREATER_THAN', 
     'LESS_THAN_EQUALS', 'GREATER_THAN_EQUALS', 
-    'EQUALS_EQUALS', 'NOT_EQUALS', 'COMMENT', 'C_CHANNEL', 'DOT'
+    'EQUALS_EQUALS', 'NOT_EQUALS', 'COMMENT', 'C_CHANNEL', 'DOT', 'EOF'
 ]
 
 # Expressões Regulares para os tokens
@@ -41,6 +41,7 @@ t_EQUALS_EQUALS = r'=='
 t_NOT_EQUALS = r'!='
 t_C_CHANNEL = r'c_channel'
 t_DOT = r'\.'
+t_EOF = r'EOF'  # EOF token
 
 
 # Ignorar espaços em branco e tabulações
@@ -69,9 +70,14 @@ def t_STRING(t):
     t.value = t.value[1:-1]  # Remove as aspas
     return t
 
+def t_FLOAT(t):
+    r'\d+\.\d+'
+    t.value = float(t.value)
+    return t
+
 # Tratar caracteres ilegais
 def t_error(t):
-    interpretador.has_error = True
+    interpreter.has_error = True
     print(f"Caractere ilegal '{t.value[0]}' na linha {t.lineno}")
     t.lexer.skip(1)
 

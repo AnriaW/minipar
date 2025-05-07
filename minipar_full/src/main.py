@@ -1,4 +1,4 @@
-import sintax as ps
+import parser as ps
 import lexer as lexic
 import interpreter as exec
 import sys
