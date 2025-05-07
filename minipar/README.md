@@ -1,6 +1,7 @@
 # Interpretador miniPar
 
-Grupo: Antônio, Bruno, Enéas, Herberty e Leonardo
+Projeto desenvolvido para a disciplina de Compiladores 2024.2.  
+Grupo: Antônio, Bruno, Eneas, Herberty e Leonardo
 
 ## Descrição
 
@@ -8,10 +9,10 @@ Este repositório contém um interpretador simples para a linguagem miniPar. O o
 
 ## Funcionalidades
 
-- **Analisador Léxico**: Identifica os tokens da linguagem.
-- **Analisador Sintático**: Realiza a análise de estrutura da linguagem.
-- **Analisador Semântico**: Verifica a validade semântica do código.
-- **Execução de Código**: Processa as instruções do código em tempo de execução.
+- **lexer.py**: Identifica os tokens da linguagem.
+- **parser.py**: Realiza a análise de estrutura da linguagem.
+- **semantic.py**: Verifica a validade semântica do código.
+- **exec.py**: Processa as instruções do código em tempo de execução.
 
 ## Requisitos
 
@@ -23,7 +24,7 @@ Este repositório contém um interpretador simples para a linguagem miniPar. O o
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/gabitenoriob/interpretador-miniPar.git
+   git clone https://github.com/AnriaW/interpretador-miniPar.git
    ```
 2. Abra o terminal, navegue até a pasta do projeto e digite o seguinte comando para executar o programa:
 ```sh
@@ -34,5 +35,3 @@ python main.py <nome_do_programa.mp>
 python3 main.py teste2.mp
 ```
 
-***OBS:***
-Se for o teste1 rode em 2 terminais , 1 servidor e outro cliente. Verifique se a porta usada está liberada.

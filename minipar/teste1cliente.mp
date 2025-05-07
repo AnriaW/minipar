@@ -1,6 +1,6 @@
 # Programa cliente (computador_1) de uma calculadora aritmética simples
 
-SEQ{
+SEQ
     Output("Escolha uma operacao aritmetica: +, -, *, /")
     operacao = Input()
 
@@ -18,4 +18,3 @@ SEQ{
 
     # Imprime o resultado do cálculo
     Output("Resultado da operacao: ", resultado)
-}

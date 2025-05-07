@@ -1,7 +1,7 @@
 import ply.yacc as yacc
 from semantic import SymbolTable 
 from lexer import tokens
-import interpreter
+import exec
 
 symbol_table = SymbolTable() 
 # Definir precedência dos operadores
@@ -28,13 +28,13 @@ def p_bloco_stmt(p):
         p[0] = (p[1], p[2])
 
 def p_bloco_SEQ(p):
-    '''bloco_SEQ : SEQ LBRACE stmts RBRACE'''
-    p[0] = ('SEQ', p[3])
+    '''bloco_SEQ : SEQ stmts'''
+    p[0] = ('SEQ', p[2])
 
 def p_bloco_PAR(p):
-    '''bloco_PAR : PAR LBRACE stmts RBRACE'''
-    p[0] = ('PAR', p[3])
-    
+    '''bloco_PAR : PAR stmts'''
+    p[0] = ('PAR', p[2])
+
 def p_bloco_IF(p):
     '''bloco_IF : IF LPAREN bool RPAREN LBRACE stmts RBRACE'''
     p[0] = ('IF', p[3], p[6])
@@ -111,7 +111,7 @@ def p_expr_id(p):
     '''expr : ID'''
     if p[1] not in symbol_table.symbols:
         print(f"Erro semântico: identificador '{p[1]}' não declarado")
-        interpreter.has_error = True
+        exec.has_error = True
     p[0] = p[1]
 
 
@@ -127,7 +127,7 @@ def p_c_channel(p):
     '''c_channel : C_CHANNEL ID LPAREN STRING COMMA STRING RPAREN'''
     p[0] = ('C_CHANNEL', p[2], p[4], p[6])
 
-    interpreter.channels[p[2]] = (p[4],p[6])
+    exec.channels[p[2]] = (p[4],p[6])
 
 def p_c_channel_stmt(p):
     '''c_channel_stmt : send_stmt
@@ -142,9 +142,9 @@ def p_send_stmt(p):
     elif len(p) == 13:
         p[0] = (p[1], 'SEND', p[5], p[7], p[9], p[11])
     
-    if p[1] not in interpreter.channels:
+    if p[1] not in exec.channels:
         print(f"Erro semântico: identificador '{p[1]}' em '{p[1]}.{p[3]}()' não declarado")
-        interpreter.has_error = True
+        exec.has_error = True
 
 def p_receive_stmt(p):
     '''receive_stmt : ID DOT RECEIVE LPAREN ID COMMA expr COMMA expr COMMA expr RPAREN
@@ -155,12 +155,12 @@ def p_receive_stmt(p):
     elif len(p) == 13:
         p[0] = (p[1], 'RECEIVE', p[5], p[7], p[9], p[11])
     
-    if p[1] not in interpreter.channels:
+    if p[1] not in exec.channels:
         print(f"Erro semântico: identificador '{p[1]}' em '{p[1]}.{p[3]}()' não declarado")
-        interpreter.has_error = True
+        exec.has_error = True
 
 def p_error(p):
-    interpreter.has_error = True
+    exec.has_error = True
     if p:
         print(f"Erro sintático na linha {p.lineno}, token '{p.value}'")
         # Trata o erro e recupera a análise
